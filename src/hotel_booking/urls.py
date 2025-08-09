@@ -17,11 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from modules.user.views import UserRegisterView
 
 router = routers.DefaultRouter()
 
 urlpatterns = [
+    #admin
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    
+    #drf session
+    path('api/v1/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    #user
+    path('api/v1/register/', UserRegisterView.as_view(), name='user_register'),
+
+    #main api
+    path('api/v1/', include(router.urls)),
 ]
