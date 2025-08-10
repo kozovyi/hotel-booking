@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -34,8 +35,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    
-    phone_number = models.CharField(verbose_name="User phone number", null=True, default=None)
+    username_validator = UnicodeUsernameValidator()
+
+    phone_number = models.CharField(verbose_name="User phone number", null=True, blank=True, default=None)
     email = models.EmailField(_('email address'), blank=False, null=False, unique=True)
 
     USERNAME_FIELD = 'email'
@@ -48,6 +50,18 @@ class User(AbstractUser):
             "Designates whether this user should be treated as active. "
             "Unselect this instead of deleting accounts."
         ),
+    )
+
+    username = models.CharField(
+        _("username"),
+        blank=True,
+        max_length=150,
+        unique=False,
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[username_validator],
+
     )
 
     objects = UserManager() # type: ignore
