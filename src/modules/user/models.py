@@ -55,6 +55,7 @@ class User(AbstractUser):
     username = models.CharField(
         _("username"),
         blank=True,
+        null=True,
         max_length=150,
         unique=False,
         help_text=_(
