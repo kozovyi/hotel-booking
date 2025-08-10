@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 from modules.user.models import User
-from modules.user.serializer import UserRegisterSerializer
+from modules.user.serializers import UserRegisterSerializer
 
 
 # Create your views here.
