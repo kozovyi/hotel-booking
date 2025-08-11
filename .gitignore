@@ -9,4 +9,6 @@ HotelBooking.code-workspace
 
 # Virtual environments
 .venv
+
 .vscode
+logs/

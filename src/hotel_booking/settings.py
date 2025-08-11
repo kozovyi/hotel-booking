@@ -188,3 +188,57 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+        "user_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/user_log_file.log"),
+            "formatter": "verbose",
+        },
+        "hotel_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/hotel_log_file.log"),
+            "formatter": "verbose",
+        },
+        "review_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/review_log_file.log"),
+            "formatter": "verbose",
+        },
+        "booking_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/booking_log_file.log"),
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "modules.user": {
+            "handlers": ["user_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "modules.hotel": {
+            "handlers": ["hotel_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "modules.review": {
+            "handlers": ["review_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "modules.booking": {
+            "handlers": ["booking_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} ({levelname}) - {name} - {message}",
+            "style": "{",
+        }
+    },
+}
