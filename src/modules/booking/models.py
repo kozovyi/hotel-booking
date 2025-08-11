@@ -6,14 +6,14 @@ from modules.hotel.models import Hotel, Room, Service
 
 User = get_user_model()
 
-# Create your models here.
+#Добавити перевірку на коректність дати
 class Booking(models.Model):
     booking_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bookings")
     check_in = models.DateField()
     check_out = models.DateField()
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="room_bookings")
-    service = models.ManyToManyField(Service, related_name='service_booking')
+    service = models.ManyToManyField(Service, related_name='service_booking', blank=True)
 
     def __str__(self):
         return f"Booking {self.booking_id} by {self.user.email}"

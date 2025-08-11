@@ -6,6 +6,7 @@ dist/
 wheels/
 *.egg-info
 HotelBooking.code-workspace
+graph_models
 
 # Virtual environments
 .venv

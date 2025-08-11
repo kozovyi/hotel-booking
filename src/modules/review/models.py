@@ -13,7 +13,7 @@ class Review(models.Model):
         decimal_places=1,
         validators=[MinValueValidator(0.0), MaxValueValidator(10.0)]
     )
-    comment = models.TextField()
+    comment = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     uptated_at = models.DateTimeField(auto_now=True)
     hotel = models.ForeignKey(

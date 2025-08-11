@@ -2,11 +2,10 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 # Create your models here. 
-# 
-# Додати необовязкові поля   
+ 
 class Hotel(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     address = models.CharField(max_length=255)
     phone_number = models.CharField(
         max_length=16,
@@ -35,7 +34,7 @@ class RoomType(models.Model):
         choices=TypeChoice.choices,
         default=TypeChoice.STD
     )
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.PositiveIntegerField(default=1)
 
@@ -49,7 +48,7 @@ class Room(models.Model):
     
     name = models.CharField(max_length=100)
     room_number = models.PositiveIntegerField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     status = models.CharField(
         max_length=10,
         choices=StatusChoice.choices,
@@ -63,7 +62,7 @@ class Room(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
