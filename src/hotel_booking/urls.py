@@ -27,6 +27,9 @@ router = routers.DefaultRouter()
 urlpatterns = [
     #admin
     path('admin/', admin.site.urls),
+
+    #apps
+    path('api/v1/', include('modules.review.urls')),
     
     #auth
     path('api/v1/auth/', include('djoser.urls')),
