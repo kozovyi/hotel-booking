@@ -17,6 +17,7 @@ import environ
 import os
 
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, False)
@@ -53,6 +54,8 @@ INSTALLED_APPS = [
     'modules.booking',
     'modules.hotel',
     'modules.review',
+
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +134,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
@@ -150,8 +155,8 @@ REST_FRAMEWORK = {
 #auth
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=env("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)), # type: ignore
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=env("REFRESH_TOKEN_LIFETIME_DAYS", default=1)), #type:ignore
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
@@ -241,4 +246,15 @@ LOGGING = {
             "style": "{",
         }
     },
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'My API',
+    'VERSION': '1.0.0',
+    'DESCRIPTION': 'Документація API',
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,  # токен не злітає при перезавантаженні
+    },
+    'SECURITY': [{'BearerAuth': []}], 
 }

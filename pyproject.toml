@@ -13,4 +13,5 @@ dependencies = [
     "django-unfold>=0.63.0",
     "djangorestframework-simplejwt[crypto]>=5.5.1",
     "djoser>=2.3.3",
+    "drf-spectacular>=0.28.0",
 ]

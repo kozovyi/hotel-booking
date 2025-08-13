@@ -18,24 +18,28 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 from modules.user.views import UserRegisterView
+from modules.booking.views import BookingViewSetAdmin
 
 
 router = routers.DefaultRouter()
+router.register('booking', BookingViewSetAdmin, basename='booking')
 
 urlpatterns = [
+    #swagger
+    path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/v1/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    
     #admin
     path('admin/', admin.site.urls),
     
-    #auth
+    #auth / user
     path('api/v1/auth/', include('djoser.urls')),
     path('api/v1/auth/jwt/create/', TokenObtainPairView.as_view(), name="jwt_create"),
     path('api/v1/auth/jwt/refresh/', TokenRefreshView.as_view(), name="jwt_refresh"),
-
-
-    #user
-    path('api/v1/register/', UserRegisterView.as_view(), name='user_register'),
+    path('api/v1/auth/user/register', UserRegisterView.as_view(), name='user_register'),
 
     #main api
     path('api/v1/', include(router.urls)),
