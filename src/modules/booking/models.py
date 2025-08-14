@@ -2,6 +2,8 @@ import uuid
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from datetime import datetime
+
 from modules.hotel.models import Hotel, Room, Service
 
 User = get_user_model()
@@ -13,7 +15,8 @@ class Booking(models.Model):
     check_in = models.DateField()
     check_out = models.DateField()
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="room_bookings")
-    service = models.ManyToManyField(Service, related_name='service_booking')
+    service = models.ManyToManyField(Service, related_name='service_bookings', blank=True)
+    created_at = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return f"Booking {self.booking_id} by {self.user.email}"
