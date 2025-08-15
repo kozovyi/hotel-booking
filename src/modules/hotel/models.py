@@ -44,16 +44,16 @@ class RoomType(models.Model):
 
 class Room(models.Model):
     class StatusChoice(models.TextChoices):
-        RESERVED = 'Reserved'
-        VACANT = 'Vacant'
+        AVAILABLE = 'Available', 'Available for booking'
+        UNAVAILABLE = 'Unavailable', 'Not available for booking'
     
     name = models.CharField(max_length=100)
     room_number = models.PositiveIntegerField()
     description = models.TextField()
     status = models.CharField(
-        max_length=10,
+        max_length=11,
         choices=StatusChoice.choices,
-        default=StatusChoice.VACANT
+        default=StatusChoice.AVAILABLE
     )
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="hotel_rooms")
     room_type = models.ForeignKey(RoomType, on_delete=models.PROTECT, related_name='type_room_rooms')
