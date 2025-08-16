@@ -9,49 +9,126 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Hotel',
+            name="Hotel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField()),
-                ('address', models.CharField(max_length=255)),
-                ('phone_number', models.CharField(max_length=16, validators=[django.core.validators.RegexValidator(message='Номер телефону має бути у форматі +380123456789 (від 10 до 15 цифр)', regex='^\\+?\\d{10,15}$')])),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField()),
+                ("address", models.CharField(max_length=255)),
+                (
+                    "phone_number",
+                    models.CharField(
+                        max_length=16,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                message="Номер телефону має бути у форматі +380123456789 (від 10 до 15 цифр)",
+                                regex="^\\+?\\d{10,15}$",
+                            )
+                        ],
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='RoomType',
+            name="RoomType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('room_type', models.CharField(choices=[('STD', 'Std'), ('Superior', 'Superior'), ('Deluxe', 'Deluxe'), ('Junior Suite', 'Junior Suite'), ('Suite', 'Suite'), ('Family room', 'Family Room')], default='STD', max_length=20)),
-                ('description', models.TextField()),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('capacity', models.PositiveIntegerField(default=1)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "room_type",
+                    models.CharField(
+                        choices=[
+                            ("STD", "Std"),
+                            ("Superior", "Superior"),
+                            ("Deluxe", "Deluxe"),
+                            ("Junior Suite", "Junior Suite"),
+                            ("Suite", "Suite"),
+                            ("Family room", "Family Room"),
+                        ],
+                        default="STD",
+                        max_length=20,
+                    ),
+                ),
+                ("description", models.TextField()),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("capacity", models.PositiveIntegerField(default=1)),
             ],
         ),
         migrations.CreateModel(
-            name='Service',
+            name="Service",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField()),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField()),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
             ],
         ),
         migrations.CreateModel(
-            name='Room',
+            name="Room",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('room_number', models.PositiveIntegerField()),
-                ('description', models.TextField()),
-                ('status', models.CharField(choices=[('Reserved', 'Reserved'), ('Vacant', 'Vacant')], default='Vacant', max_length=10)),
-                ('hotel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='hotel_rooms', to='hotel.hotel')),
-                ('room_type', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='type_room_rooms', to='hotel.roomtype')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("room_number", models.PositiveIntegerField()),
+                ("description", models.TextField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("Reserved", "Reserved"), ("Vacant", "Vacant")],
+                        default="Vacant",
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "hotel",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="hotel_rooms",
+                        to="hotel.hotel",
+                    ),
+                ),
+                (
+                    "room_type",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="type_room_rooms",
+                        to="hotel.roomtype",
+                    ),
+                ),
             ],
         ),
     ]
