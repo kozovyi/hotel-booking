@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('booking', '0001_initial'),
-        ('hotel', '0001_initial'),
+        ("booking", "0001_initial"),
+        ("hotel", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='booking',
-            name='service',
-            field=models.ManyToManyField(blank=True, related_name='service_bookings', to='hotel.service'),
+            model_name="booking",
+            name="service",
+            field=models.ManyToManyField(
+                blank=True, related_name="service_bookings", to="hotel.service"
+            ),
         ),
     ]
