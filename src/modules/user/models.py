@@ -5,12 +5,13 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         """
         Create and save a user with the given email and password.
         """
-        
+
         if not email:
             raise ValueError(_("The Email must be set"))
         email = self.normalize_email(email)
@@ -18,7 +19,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save()
         return user
-    
+
     def create_superuser(self, email, password, **extra_fields):
         """
         Create and save a SuperUser with the given email and password.
@@ -37,10 +38,12 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
 
-    phone_number = models.CharField(verbose_name="User phone number", null=True, blank=True, default=None)
-    email = models.EmailField(_('email address'), blank=False, null=False, unique=True)
+    phone_number = models.CharField(
+        verbose_name="User phone number", null=True, blank=True, default=None
+    )
+    email = models.EmailField(_("email address"), blank=False, null=False, unique=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     is_active = models.BooleanField(
@@ -62,7 +65,6 @@ class User(AbstractUser):
             "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
         ),
         validators=[username_validator],
-
     )
 
-    objects = UserManager() # type: ignore
+    objects = UserManager()  # type: ignore

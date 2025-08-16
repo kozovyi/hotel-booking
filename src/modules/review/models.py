@@ -5,13 +5,16 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 User = get_user_model()
 
+
 # Прописати у сіреалайзері валідацію для перевірки чи hotel або room заповнений
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_reviews")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user_reviews"
+    )
     rating = models.DecimalField(
         max_digits=3,
         decimal_places=1,
-        validators=[MinValueValidator(0.0), MaxValueValidator(10.0)]
+        validators=[MinValueValidator(0.0), MaxValueValidator(10.0)],
     )
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -21,15 +24,15 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name="hotel_reviews",
         null=True,
-        blank=True
+        blank=True,
     )
     room = models.ForeignKey(
         Room,
         on_delete=models.CASCADE,
         related_name="room_reviews",
         null=True,
-        blank=True
+        blank=True,
     )
-    
+
     def __str__(self):
         return self.comment[:50]
