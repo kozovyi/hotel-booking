@@ -7,6 +7,7 @@ from unfold.admin import ModelAdmin
 
 User = get_user_model()
 
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
 
