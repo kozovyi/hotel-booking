@@ -10,5 +10,6 @@ HotelBooking.code-workspace
 # Virtual environments
 .venv
 
+.ruff_cache/
 .vscode
 logs/

@@ -15,3 +15,15 @@ dependencies = [
     "djoser>=2.3.3",
     "drf-spectacular>=0.28.0",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "mypy>=1.17.1",
+    "ruff>=0.12.9",
+]
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["F401", "E501"]
+exclude = ["src/hotel_booking/settings.py","**/migrations/*"]
