@@ -11,31 +11,88 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('hotel', '0001_initial'),
+        ("hotel", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Booking',
+            name="Booking",
             fields=[
-                ('booking_id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ('check_in', models.DateField()),
-                ('check_out', models.DateField()),
-                ('room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='room_bookings', to='hotel.room')),
-                ('service', models.ManyToManyField(related_name='service_booking', to='hotel.service')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_bookings', to=settings.AUTH_USER_MODEL)),
+                (
+                    "booking_id",
+                    models.UUIDField(
+                        default=uuid.uuid4, primary_key=True, serialize=False
+                    ),
+                ),
+                ("check_in", models.DateField()),
+                ("check_out", models.DateField()),
+                (
+                    "room",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="room_bookings",
+                        to="hotel.room",
+                    ),
+                ),
+                (
+                    "service",
+                    models.ManyToManyField(
+                        related_name="service_booking", to="hotel.service"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="user_bookings",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Payment',
+            name="Payment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('payment_method', models.CharField(choices=[('Card', 'Card'), ('Cash', 'Cash')], default='Cash', max_length=5)),
-                ('status', models.CharField(choices=[('Paid', 'Paid'), ('Pending', 'Pending'), ('Failed', 'Failed')], default='Pending', max_length=10)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('booking', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='booking_payment', to='booking.booking')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "payment_method",
+                    models.CharField(
+                        choices=[("Card", "Card"), ("Cash", "Cash")],
+                        default="Cash",
+                        max_length=5,
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("Paid", "Paid"),
+                            ("Pending", "Pending"),
+                            ("Failed", "Failed"),
+                        ],
+                        default="Pending",
+                        max_length=10,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "booking",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="booking_payment",
+                        to="booking.booking",
+                    ),
+                ),
             ],
         ),
     ]

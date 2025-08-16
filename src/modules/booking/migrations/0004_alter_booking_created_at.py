@@ -7,13 +7,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('booking', '0003_booking_created_at'),
+        ("booking", "0003_booking_created_at"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='booking',
-            name='created_at',
-            field=models.DateTimeField(default=datetime.datetime(2025, 8, 15, 21, 49, 9, 707407)),
+            model_name="booking",
+            name="created_at",
+            field=models.DateTimeField(
+                default=datetime.datetime(2025, 8, 15, 21, 49, 9, 707407)
+            ),
         ),
     ]
