@@ -11,5 +11,6 @@ HotelBooking.code-workspace
 .venv
 
 .ruff_cache/
+.mypy_cache/
 .vscode
 logs/

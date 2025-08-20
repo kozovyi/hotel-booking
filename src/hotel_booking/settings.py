@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from django.conf import settings
 from pathlib import Path
 from datetime import timedelta
-import environ
+import environ  # type: ignore
 import os
 
 
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     "modules.hotel",
     "modules.review",
     "drf_spectacular",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -150,8 +150,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=env("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)),  # type: ignore
     "REFRESH_TOKEN_LIFETIME": timedelta(
-        days=env("REFRESH_TOKEN_LIFETIME_DAYS", default=1) # type:ignore
-    ), 
+        days=env("REFRESH_TOKEN_LIFETIME_DAYS", default=1)  # type:ignore
+    ),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,

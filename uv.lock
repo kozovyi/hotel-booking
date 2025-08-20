@@ -228,6 +228,18 @@ wheels = [
 ]
 
 [[package]]
+name = "django-filter"
+version = "25.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b5/40/c702a6fe8cccac9bf426b55724ebdf57d10a132bae80a17691d0cf0b9bac/django_filter-25.1.tar.gz", hash = "sha256:1ec9eef48fa8da1c0ac9b411744b16c3f4c31176c867886e4c48da369c407153", size = 143021 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/a6/70dcd68537c434ba7cb9277d403c5c829caf04f35baf5eb9458be251e382/django_filter-25.1-py3-none-any.whl", hash = "sha256:4fa48677cf5857b9b1347fed23e355ea792464e0fe07244d1fdfb8a806215b80", size = 94114 },
+]
+
+[[package]]
 name = "django-rest-framework"
 version = "0.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -295,6 +307,15 @@ wheels = [
 ]
 
 [[package]]
+name = "drf-dynamic-fields"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d2/7f/1c17e0791b8d028b47908be78ac8041c544bd07a59afd8556304a0f0d355/drf_dynamic_fields-0.4.0.tar.gz", hash = "sha256:f20a5ec27d003db7595c9315db22217493dcaed575f3811d3e12f264c791c20c", size = 4864 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/18/4b02bda9ae5a7ac52bfcb4f1740fb4a0aa12d220881695471b700bb3f00e/drf_dynamic_fields-0.4.0-py2.py3-none-any.whl", hash = "sha256:48b879fe899905bc18593a61bca43e3b595dc3431b3b4ee499a9fd6c9a53f98c", size = 5451 },
+]
+
+[[package]]
 name = "drf-spectacular"
 version = "0.28.0"
 source = { registry = "https://pypi.org/simple" }
@@ -319,10 +340,12 @@ dependencies = [
     { name = "django" },
     { name = "django-environ" },
     { name = "django-extensions" },
+    { name = "django-filter" },
     { name = "django-rest-framework" },
     { name = "django-unfold" },
     { name = "djangorestframework-simplejwt", extra = ["crypto"] },
     { name = "djoser" },
+    { name = "drf-dynamic-fields" },
     { name = "drf-spectacular" },
     { name = "psycopg", extra = ["binary"] },
 ]
@@ -339,10 +362,12 @@ requires-dist = [
     { name = "django", specifier = ">=5.2.5" },
     { name = "django-environ", specifier = ">=0.12.0" },
     { name = "django-extensions", specifier = ">=4.1" },
+    { name = "django-filter", specifier = ">=25.1" },
     { name = "django-rest-framework", specifier = ">=0.1.0" },
     { name = "django-unfold", specifier = ">=0.63.0" },
     { name = "djangorestframework-simplejwt", extras = ["crypto"], specifier = ">=5.5.1" },
     { name = "djoser", specifier = ">=2.3.3" },
+    { name = "drf-dynamic-fields", specifier = ">=0.4.0" },
     { name = "drf-spectacular", specifier = ">=0.28.0" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.2.3" },
 ]
@@ -353,7 +378,6 @@ dev = [
     { name = "mypy", specifier = ">=1.17.1" },
     { name = "ruff", specifier = ">=0.12.9" },
 ]
-tes = []
 
 [[package]]
 name = "idna"

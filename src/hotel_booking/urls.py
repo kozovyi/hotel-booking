@@ -49,8 +49,5 @@ urlpatterns = [
         AvailableRoomsView.as_view(),
         name="awailable_rooms",
     ),
-
-
-
     path("api/v1/", include(router.urls)),
 ]
