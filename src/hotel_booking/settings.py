@@ -62,6 +62,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+if DEBUG:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware"] + MIDDLEWARE
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
+
 ROOT_URLCONF = "hotel_booking.urls"
 
 TEMPLATES = [
@@ -227,6 +234,11 @@ LOGGING = {
             "handlers": ["booking_log_file"],
             "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
         },
+        "debug_toolbar": {
+            "handlers": ["console"],
+            "level": "ERROR", 
+            "propagate": False,
+        },
     },
     "formatters": {
         "verbose": {
@@ -246,3 +258,4 @@ SPECTACULAR_SETTINGS = {
     },
     "SECURITY": [{"BearerAuth": []}],
 }
+
