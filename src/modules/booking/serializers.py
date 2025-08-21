@@ -1,10 +1,10 @@
 import logging
+from datetime import timedelta
+
 from rest_framework import serializers
 
 from modules.booking.models import Booking
-from modules.booking.exceprions import InvalidDateRange
 from modules.booking.services import BookingService
-
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +23,16 @@ class BookingSerializerBase(serializers.ModelSerializer):
 
 
 class BookingSerializerСompactly(BookingSerializerBase):
+    room_name = serializers.CharField(source="room.name")
+
     class Meta(BookingSerializerBase.Meta):
-        fields = ["pk", "user", "check_in", "check_out", "room"]
+        fields = ["pk", "user", "check_in", "check_out", "room_name"]
+
+
+class BookingStatisticsSerializer(serializers.Serializer):
+    bookings_number = serializers.IntegerField()
+    total_amount_of_payments = serializers.DecimalField(max_digits=10, decimal_places=2)
+    average_length_of_stay = serializers.DurationField()
 
 
 class AvailableRoomSerializer(serializers.Serializer):

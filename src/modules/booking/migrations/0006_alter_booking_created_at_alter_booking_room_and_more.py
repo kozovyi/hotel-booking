@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("booking", "0005_alter_booking_created_at"),
         ("hotel", "0003_hotel_city"),

@@ -1,12 +1,18 @@
 import uuid
-
-from django.db import models
-from django.contrib.auth import get_user_model
 from datetime import datetime
+
+from django.contrib.auth import get_user_model
+from django.db import models
+from django.db.models import QuerySet
 
 from modules.hotel.models import Hotel, Room, Service
 
 User = get_user_model()
+
+
+class BookingQuerySet(QuerySet):
+    def active(self):
+        return self.filter(check_out__gte=datetime.now())
 
 
 # Create your models here.
@@ -33,6 +39,8 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking {self.booking_id} by {self.user.email}"
+
+    objects = BookingQuerySet.as_manager()
 
 
 class Payment(models.Model):

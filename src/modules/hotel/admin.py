@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Hotel, Room, RoomType, Service
 from unfold.admin import ModelAdmin
+
+from .models import Hotel, Room, RoomType, Service
 
 
 # Register your models here.

@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
-from datetime import timedelta
-import environ  # type: ignore
 import os
+from datetime import timedelta
+from pathlib import Path
 
+import environ  # type: ignore
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(DEBUG=(bool, False))
@@ -155,7 +155,9 @@ REST_FRAMEWORK = {
 # auth
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=env("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)),  # type: ignore
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=env("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)  # type: ignore
+    ),
     "REFRESH_TOKEN_LIFETIME": timedelta(
         days=env("REFRESH_TOKEN_LIFETIME_DAYS", default=1)  # type:ignore
     ),
@@ -236,7 +238,7 @@ LOGGING = {
         },
         "debug_toolbar": {
             "handlers": ["console"],
-            "level": "ERROR", 
+            "level": "ERROR",
             "propagate": False,
         },
     },
@@ -258,4 +260,3 @@ SPECTACULAR_SETTINGS = {
     },
     "SECURITY": [{"BearerAuth": []}],
 }
-

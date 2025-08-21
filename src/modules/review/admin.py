@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Review
 from unfold.admin import ModelAdmin
+
+from .models import Review
 
 
 # Register your models here.
