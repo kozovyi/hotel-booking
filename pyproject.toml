@@ -28,6 +28,11 @@ dev = [
     "ruff>=0.12.9",
 ]
 
+[tool.black]
+target-version = ['py312']  
+skip-string-normalization = true
+
+
 [tool.ruff.lint]
 select = ["E", "F"]
 ignore = ["F401", "E501"]
