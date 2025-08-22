@@ -16,7 +16,7 @@ class Review(models.Model):
     )
     comment = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    uptated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
     hotel = models.ForeignKey(
         Hotel,
         on_delete=models.CASCADE,

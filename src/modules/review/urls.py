@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from modules.review import views
+from rest_framework.routers import DefaultRouter
+from modules.review.views import ReviewViewSet
 #from rest_framework import routers
 
+router = DefaultRouter()
+router.register(r'reviews', ReviewViewSet)
+
 urlpatterns = [
-    path('reviews/', views.review_list),
-    path('reviews/<int:pk>/', views.current_review_detail),
+    path('', include(router.urls)),
 ]

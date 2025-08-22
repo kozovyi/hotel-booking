@@ -23,4 +23,11 @@ class ReviewSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(
                     "Потрібно вказати або готель, або номер."
                 )
+
+            if hotel and room:
+                if room.hotel_id != hotel.id:
+                    raise serializers.ValidationError(
+                        "Вказана кімната не надежить до вибраного готелю"
+                    )
+                
             return attrs

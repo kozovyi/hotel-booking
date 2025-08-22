@@ -30,6 +30,7 @@ urlpatterns = [
 
     #apps
     path('api/v1/', include('modules.review.urls')),
+    path('api/v1/', include('modules.hotel.urls')),
     
     #auth
     path('api/v1/auth/', include('djoser.urls')),
