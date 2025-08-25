@@ -1,14 +1,19 @@
 from decimal import Decimal
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+
 from modules.hotel.models import Hotel, Room, Service
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 User = get_user_model()
 
+
 # Прописати у сіреалайзері валідацію для перевірки чи hotel або room заповнений
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_reviews")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user_reviews"
+    )
     rating = models.DecimalField(
         max_digits=3,
         decimal_places=1,
@@ -22,15 +27,15 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name="hotel_reviews",
         null=True,
-        blank=True
+        blank=True,
     )
     room = models.ForeignKey(
         Room,
         on_delete=models.CASCADE,
         related_name="room_reviews",
         null=True,
-        blank=True
+        blank=True,
     )
-    
+
     def __str__(self):
         return self.comment[:50]

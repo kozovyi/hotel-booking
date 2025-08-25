@@ -9,4 +9,8 @@ HotelBooking.code-workspace
 
 # Virtual environments
 .venv
+
+.ruff_cache/
+.mypy_cache/
 .vscode
+logs/

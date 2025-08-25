@@ -86,3 +86,19 @@ class AvailableRoomSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'room_number', 'description', 
                  'room_type', 'hotel_name', 'hotel']
         read_only_fields = ['id']
+
+class RoomSerializerBase(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        extra_kwargs = {
+            "pk": {"read_only": True},
+        }
+        fields = [
+            "pk",
+            "name",
+            "room_number",
+            "description",
+            "status",
+            "hotel",
+            "room_type",
+        ]

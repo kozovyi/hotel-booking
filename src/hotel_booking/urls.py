@@ -14,33 +14,52 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from hotel_booking.settings import DEBUG
+from modules.booking.views import AvailableRoomsView, BookingViewSet
 from modules.user.views import UserRegisterView
 
-
 router = routers.DefaultRouter()
+router.register("booking", BookingViewSet, basename="booking")
 
 urlpatterns = [
-    #admin
-    path('admin/', admin.site.urls),
-
+    # admin
+    path("admin/", admin.site.urls),
+    # swagger
+    path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/v1/docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    # auth / user
+    path("api/v1/auth/", include("djoser.urls")),
+    path("api/v1/auth/jwt/create/", TokenObtainPairView.as_view(), name="jwt_create"),
+    path("api/v1/auth/jwt/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"),
+    path("api/v1/auth/user/register", UserRegisterView.as_view(), name="user_register"),
+    # main api
+    path(
+        "api/v1/booking/available-rooms/",
+        AvailableRoomsView.as_view(),
+        name="awailable_rooms",
+    ),
     #apps
     path('api/v1/', include('modules.review.urls')),
     path('api/v1/', include('modules.hotel.urls')),
     
-    #auth
-    path('api/v1/auth/', include('djoser.urls')),
-    path('api/v1/auth/jwt/create/', TokenObtainPairView.as_view(), name="jwt_create"),
-    path('api/v1/auth/jwt/refresh/', TokenRefreshView.as_view(), name="jwt_refresh"),
-
-
-    #user
-    path('api/v1/register/', UserRegisterView.as_view(), name='user_register'),
-
-    #main api
-    path('api/v1/', include(router.urls)),
+    path("api/v1/", include(router.urls)),
 ]
+
+if settings.DEBUG:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+    urlpatterns = [
+        *urlpatterns,
+    ] + debug_toolbar_urls()

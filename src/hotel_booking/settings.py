@@ -10,93 +10,97 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from django.conf import settings
-from pathlib import Path
-from datetime import timedelta
-import environ
 import os
+from datetime import timedelta
+from pathlib import Path
 
+import environ  # type: ignore
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-environ.Env.read_env(BASE_DIR.parent.joinpath('.env'))
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(BASE_DIR.parent.joinpath(".env"))
 
-env.read_env(BASE_DIR.parent.joinpath('.env'))
+env.read_env(BASE_DIR.parent.joinpath(".env"))
 
-SECRET_KEY = 'django-insecure-#$_6&-=0bvv*(08q^6zmrz_asj1b2b9_=r((7c&$-!@ztr956i'
+SECRET_KEY = "django-insecure-#$_6&-=0bvv*(08q^6zmrz_asj1b2b9_=r((7c&$-!@ztr956i"
 
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'user.User' 
+AUTH_USER_MODEL = "user.User"
 
 
 INSTALLED_APPS = [
-    'unfold',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    #config / auth
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'djoser',
+    "unfold",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # config / auth
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "djoser",
     'django_extensions',
-
-    #apps
-    'modules.user',
-    'modules.booking',
-    'modules.hotel',
-    'modules.review',
+    # apps
+    "modules.user",
+    "modules.booking",
+    "modules.hotel",
+    "modules.review",
+    "drf_spectacular",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'hotel_booking.urls'
+if DEBUG:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware"] + MIDDLEWARE
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
+
+ROOT_URLCONF = "hotel_booking.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'hotel_booking.wsgi.application'
+WSGI_APPLICATION = "hotel_booking.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB__NAME'),
-        'USER': env('DB__USER'),
-        'PASSWORD': env('DB__PASS'),
-        'HOST': env('DB__HOST'),
-        'PORT': env('DB__PORT')
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("DB__NAME"),
+        "USER": env("DB__USER"),
+        "PASSWORD": env("DB__PASS"),
+        "HOST": env("DB__HOST"),
+        "PORT": env("DB__PORT"),
     }
 }
 
@@ -105,42 +109,43 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
     #  'DEFAULT_FILTER_BACKENDS': [
     #      'django_filters.rest_framework.DjangoFilterBackend'
@@ -148,15 +153,18 @@ REST_FRAMEWORK = {
 }
 
 
-#auth
+# auth
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=env("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)  # type: ignore
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=env("REFRESH_TOKEN_LIFETIME_DAYS", default=1)  # type:ignore
+    ),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
-
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
     "VERIFYING_KEY": "",
@@ -165,27 +173,91 @@ SIMPLE_JWT = {
     "JSON_ENCODER": None,
     "JWK_URL": None,
     "LEEWAY": 0,
-
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-
     "JTI_CLAIM": "jti",
-
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-
     "TOKEN_OBTAIN_SERIALIZER": "modules.user.serializers.CustomTokenObtainPairSerializer",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+        "user_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/user_log_file.log"),
+            "formatter": "verbose",
+        },
+        "hotel_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/hotel_log_file.log"),
+            "formatter": "verbose",
+        },
+        "review_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/review_log_file.log"),
+            "formatter": "verbose",
+        },
+        "booking_log_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.joinpath("logs/booking_log_file.log"),
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "modules.user": {
+            "handlers": ["user_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "modules.hotel": {
+            "handlers": ["hotel_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "modules.review": {
+            "handlers": ["review_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "modules.booking": {
+            "handlers": ["booking_log_file"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "debug_toolbar": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} ({levelname}) - {name} - {message}",
+            "style": "{",
+        }
+    },
+}
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "My API",
+    "VERSION": "1.0.0",
+    "DESCRIPTION": "Документація API",
+    "SWAGGER_UI_SETTINGS": {
+        "persistAuthorization": True,  # токен не злітає при перезавантаженні
+    },
+    "SECURITY": [{"BearerAuth": []}],
 }
